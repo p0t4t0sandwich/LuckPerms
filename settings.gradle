@@ -8,6 +8,10 @@ pluginManagement {
             name = 'Forge'
             url = 'https://maven.minecraftforge.net/'
         }
+        maven {
+            name = 'NeoForge'
+            url = 'https://maven.neoforged.net/releases'
+        }
         gradlePluginPortal()
     }
 }
@@ -31,6 +35,9 @@ include (
         'forge',
         'forge:loader',
         'forge:forge-api',
+        'neoforge',
+        'neoforge:loader',
+        'neoforge:neoforge-api',
         'nukkit',
         'nukkit:loader',
         'sponge',

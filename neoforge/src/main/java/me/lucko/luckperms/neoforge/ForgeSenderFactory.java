@@ -23,7 +23,7 @@
  *  SOFTWARE.
  */
 
-package me.lucko.luckperms.forge;
+package me.lucko.luckperms.neoforge;
 
 import com.mojang.brigadier.ParseResults;
 import me.lucko.luckperms.common.cacheddata.result.TristateResult;
@@ -49,8 +49,8 @@ import net.minecraft.world.entity.player.Player;
 import java.util.Locale;
 import java.util.UUID;
 
-public class ForgeSenderFactory extends SenderFactory<LPForgePlugin, CommandSourceStack> {
-    public ForgeSenderFactory(LPForgePlugin plugin) {
+public class ForgeSenderFactory extends SenderFactory<LPNeoForgePlugin, CommandSourceStack> {
+    public ForgeSenderFactory(LPNeoForgePlugin plugin) {
         super(plugin);
     }
 

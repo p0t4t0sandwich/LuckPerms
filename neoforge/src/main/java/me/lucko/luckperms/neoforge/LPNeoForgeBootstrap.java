@@ -23,7 +23,7 @@
  *  SOFTWARE.
  */
 
-package me.lucko.luckperms.forge;
+package me.lucko.luckperms.neoforge;
 
 import com.mojang.authlib.GameProfile;
 import me.lucko.luckperms.common.loader.LoaderBootstrap;
@@ -34,19 +34,19 @@ import me.lucko.luckperms.common.plugin.classpath.JarInJarClassPathAppender;
 import me.lucko.luckperms.common.plugin.logging.Log4jPluginLogger;
 import me.lucko.luckperms.common.plugin.logging.PluginLogger;
 import me.lucko.luckperms.common.plugin.scheduler.SchedulerAdapter;
-import me.lucko.luckperms.neoforge.util.ForgeEventBusFacade;
+import me.lucko.luckperms.neoforge.util.NeoForgeEventBusFacade;
 import net.luckperms.api.platform.Platform;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
-import net.minecraftforge.event.server.ServerStoppingEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModContainer;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.forgespi.language.IModInfo;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
+import net.neoforged.neoforgespi.language.IModInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 
@@ -64,7 +64,7 @@ import java.util.function.Supplier;
 /**
  * Bootstrap plugin for LuckPerms running on Forge.
  */
-public final class LPForgeBootstrap implements LuckPermsBootstrap, LoaderBootstrap, BootstrappedWithLoader {
+public final class LPNeoForgeBootstrap implements LuckPermsBootstrap, LoaderBootstrap, BootstrappedWithLoader {
     public static final String ID = "luckperms";
 
     /**
@@ -90,12 +90,12 @@ public final class LPForgeBootstrap implements LuckPermsBootstrap, LoaderBootstr
     /**
      * A facade for the forge event bus, compatible with LP's jar-in-jar packaging
      */
-    private final ForgeEventBusFacade forgeEventBus;
+    private final NeoForgeEventBusFacade forgeEventBus;
 
     /**
      * The plugin instance
      */
-    private final LPForgePlugin plugin;
+    private final LPNeoForgePlugin plugin;
 
     /**
      * The time when the plugin was enabled
@@ -111,13 +111,13 @@ public final class LPForgeBootstrap implements LuckPermsBootstrap, LoaderBootstr
      */
     private MinecraftServer server;
 
-    public LPForgeBootstrap(Supplier<ModContainer> loader) {
+    public LPNeoForgeBootstrap(Supplier<ModContainer> loader) {
         this.loader = loader;
-        this.logger = new Log4jPluginLogger(LogManager.getLogger(LPForgeBootstrap.ID));
-        this.schedulerAdapter = new ForgeSchedulerAdapter(this);
+        this.logger = new Log4jPluginLogger(LogManager.getLogger(LPNeoForgeBootstrap.ID));
+        this.schedulerAdapter = new NeoForgeSchedulerAdapter(this);
         this.classPathAppender = new JarInJarClassPathAppender(getClass().getClassLoader());
-        this.forgeEventBus = new ForgeEventBusFacade();
-        this.plugin = new LPForgePlugin(this);
+        this.forgeEventBus = new NeoForgeEventBusFacade();
+        this.plugin = new LPNeoForgePlugin(this);
     }
 
     // provide adapters
@@ -234,7 +234,7 @@ public final class LPForgeBootstrap implements LuckPermsBootstrap, LoaderBootstr
 
     @Override
     public Path getDataDirectory() {
-        return FMLPaths.CONFIGDIR.get().resolve(LPForgeBootstrap.ID).toAbsolutePath();
+        return FMLPaths.CONFIGDIR.get().resolve(LPNeoForgeBootstrap.ID).toAbsolutePath();
     }
 
     @Override
